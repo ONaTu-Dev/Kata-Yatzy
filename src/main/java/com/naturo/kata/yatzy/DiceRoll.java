@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
+/**
+ * 
+ * @author NTH
+ *
+ */
 public class DiceRoll {
 
 	private List<Integer> dicesRolledResult;
@@ -17,6 +21,14 @@ public class DiceRoll {
 	private final static List<Integer> SMALL_STRAIGHT_TWO = Arrays.asList(2,3,4,5);
 	private final static List<Integer> SMALL_STRAIGHT_THREE = Arrays.asList(3,4,5,6);
 
+	/**
+	 * Constructeur de DiceRoll
+	 * @param dice1 first dice rolling
+	 * @param dice2 second dice rolling
+	 * @param dice3 third dice rolling
+	 * @param dice4 fourth dice rolling
+	 * @param dice5 fifth dice rolling
+	 */
 	public DiceRoll(int dice1, int dice2, int dice3, int dice4, int dice5)
 	{
 		this.dicesRolledResult = Arrays.asList(dice1,dice2,dice3,dice4,dice5);
@@ -25,9 +37,9 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * count all occurrence outcome of one face dice
-	 * @param faceDice
-	 * @return
+	 * Count all occurrence outcome of one face dice
+	 * @param faceDice dice result after having rolled
+	 * @return sum of all occurrence of dice rolled result 
 	 */
 	
 	public int sumOneFaceDiceOccurence(int faceDice)
@@ -46,11 +58,6 @@ public class DiceRoll {
 				  .reduce(0, Integer::sum);
 	}
 	
-	public int countOccu(int oc)
-	{
-		return  (int)dicesRolledResult.stream().filter(e -> e.equals(oc)).count();
-	}
-	
 	/**
 	 * get list of dice rolled result and its occurrence
 	 * @return Map with dice rolled result as Key and its occurrence as Value
@@ -59,8 +66,6 @@ public class DiceRoll {
 	
 	private Map<Integer,Long> getListOfDiceResultAndOccurence()
 	{
-		//dicesRolledResult.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting())).entrySet().forEach(e -> System.out.println("K " + e.getKey() + "V: " + e.getValue()));			
-	
 		return dicesRolledResult.stream().collect(Collectors.groupingBy(Function.identity(),Collectors.counting()));			
 	}
 	
@@ -78,21 +83,22 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * Get occurrence of any dice with the same number of pips.
-	 * @param diceResult
-	 * @return
+	 * Get face dice rolled associated with the occurrence giving
+	 * @param occurrence number rolling with same face dice
+	 * @return face dice rolled associated this occurrence
 	 */
-	public int getOccurenceOfKind(int pipsNumber)
+	public int getOccurenceOfKind(int occurrence)
 	{
-		return this.getDiceResultListWhenOccurencesGreaterThan(pipsNumber).stream()
+		return this.getDiceResultListWhenOccurencesGreaterThan(occurrence).stream()
 					.findFirst()
 					.orElse(-1);
 		
 	}
 	
-	/** Verify if all five dice with the same number
-	 *  return true when found 5 in list 
-	 *  */
+	/**
+	 * Verify if all five dice with the same number
+	 * @return true when found 5 in list 
+	 */
 	
 	public boolean isYatzy()
 	{
@@ -116,7 +122,7 @@ public class DiceRoll {
 	/**
 	 * Verify if any five dice in ascending order
 	 * and the result of each rolled dice occurrence is 1 
-	 * @return
+	 * @return true / false
 	 */
 	public boolean isLargeStraight()
 	{

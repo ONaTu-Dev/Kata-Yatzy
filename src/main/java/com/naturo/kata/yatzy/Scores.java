@@ -2,6 +2,11 @@ package com.naturo.kata.yatzy;
 
 import java.util.List;
 
+/**
+ * 
+ * @author NTH
+ *
+ */
 public class Scores {
 
 	private Scores() {
@@ -9,7 +14,7 @@ public class Scores {
 	}
 	/**
 	 * Get number of occurrence of dice with 1 spot
-	 * @param DiceRoll
+	 * @param dice dice rolled
 	 * @return occurrences sum result
 	 */
 	public static int ones(DiceRoll dice)
@@ -19,7 +24,7 @@ public class Scores {
 
 	/**
 	 * Get number of occurrence of dice with 2 spots
-	 * @param DiceRoll
+	 * @param dice dice rolled
 	 * @return occurrences sum result
 	 */
 	public static int twos(DiceRoll dice)
@@ -29,7 +34,7 @@ public class Scores {
 	
 	/**
 	 * Get number of occurrence of dice with 3 spots
-	 * @param DiceRoll
+	 * @param dice dice rolled
 	 * @return occurrences sum result
 	 */
 	public static int threes(DiceRoll dice)
@@ -39,7 +44,7 @@ public class Scores {
 	
 	/**
 	 * Get number of occurrence of dice with 4 spots
-	 * @param DiceRoll
+	 * @param dice dice rolled
 	 * @return occurrences sum result
 	 */
 	public static int fours(DiceRoll dice)
@@ -49,7 +54,7 @@ public class Scores {
 	
 	/**
 	 * Get number of occurrence of dice with 5 spots
-	 * @param DiceRoll
+	 * @param dice dice rolled
 	 * @return occurrences sum result
 	 */
 	public static int fives(DiceRoll dice)
@@ -59,7 +64,7 @@ public class Scores {
 	
 	/**
 	 * Get number of occurrence of dice with 6 spots
-	 * @param DiceRoll
+	 * @param dice dice rolled
 	 * @return occurrences sum result
 	 */
 	public static int sixs(DiceRoll dice)
@@ -69,8 +74,8 @@ public class Scores {
 	
 	/**
 	 * Sum of all dices result
-	 * @param DiceRoll
-	 * @return
+	 * @param dice dice rolled
+	 * @return sum of all dices results
 	 */
 	public static int sumAllDicesRolledResult(DiceRoll dice)
 	{
@@ -78,9 +83,9 @@ public class Scores {
 	}
 	
 	/**
-	 * Get Yatzy score
-	 * @param DiceRoll
-	 * @return
+	 * Get Yatzy score. Yatzy: all five dice with the same number
+	 * @param dice dice rolled
+	 * @return score when all five dice with the same number
 	 */
 	public static int yatzyScore(DiceRoll dice)
 	{
@@ -88,22 +93,22 @@ public class Scores {
 	}
 	
 	/**
-	 * Get dice rolled result of a kind
-	 * @param DiceRoll
-	 * @param number of pips
-	 * @return
+	 * Get sum of any dice having same spot number
+	 * @param dice dice rolled
+	 * @param occurrence number of occurrence rolling for one dice result
+	 * @return sum of those dices
 	 */
-	public static int getDiceResultOfAkind(DiceRoll dice, int pipsNumber)
+	public static int getDiceResultOfAkind(DiceRoll dice, int occurrence)
 	{
-		int index =  dice.getOccurenceOfKind(pipsNumber);
+		int index =  dice.getOccurenceOfKind(occurrence);
 		
-		return index != -1 ? (index) * pipsNumber : 0;
+		return index != -1 ? (index) * occurrence : 0;
 	}
 	
 	/**
-	 * Get score of small straight
-	 * @param dice
-	 * @return
+	 * Get score of small straight. Small straight : any four dice in ascending order.
+	 * @param dice dice rolled
+	 * @return small straight score
 	 */
 	public static int scoreOfSmallStraight(DiceRoll dice)
 	{
@@ -111,9 +116,9 @@ public class Scores {
 	}
 	
 	/**
-	 * Get score of large straight
-	 * @param DiceRoll
-	 * @return
+	 * Get score of large straight. Large straight: any five dice in ascending order.
+	 * @param dice dice rolled
+	 * @return large straight score
 	 */
 	public static int scoreOfLargeStraight(DiceRoll dice)
 	{
@@ -121,9 +126,9 @@ public class Scores {
 	}
 	
 	/**
-	 * Get Two Pair
-	 * @param DiceRoll
-	 * @return
+	 * Get Two Pair i.e Two different pairs of dice
+	 * @param dice dice rolled
+	 * @return score of two different pairs of dice
 	 */
 	public static int twoPair(DiceRoll dice)
 	{
@@ -132,9 +137,9 @@ public class Scores {
 	}
 	
 	/**
-	 * Get One Pair
-	 * @param DiceRoll
-	 * @return
+	 * Get One Pair i.e Two dice showing the same number.
+	 * @param dice dice rolled
+	 * @return score of those two dice
 	 */
 	public static int onePair(DiceRoll dice)
 	{
@@ -143,9 +148,9 @@ public class Scores {
 	}
 	
 	/**
-	 * Get Full House
-	 * @param DiceRoll
-	 * @return
+	 * Get Full House i.e Any set of three combined with a different pair.
+	 * @param dice dice rolled
+	 * @return sum of all dice
 	 */
 	public static int fullHouse(DiceRoll dice)
 	{
