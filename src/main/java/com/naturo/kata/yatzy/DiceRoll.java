@@ -6,28 +6,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-/**
+
+/** Realize combinations of dice roll results, based on Yatzy Rule from https://en.wikipedia.org/wiki/Yatzy
  * 
- * @author NTH
+ * @author HOANG Nha Thu
  *
  */
 public class DiceRoll {
 
+	/**
+	 * List of five number of spot for five dice rolling 
+	 */
 	private List<Integer> dicesRolledResult;
+	
+	/**
+	 * List of dice rolled numbers as key and its occurrences as value
+	 */
 	private Map<Integer,Long> dicesResOccur;
 	
-	
-	private final static List<Integer> SMALL_STRAIGHT_ONE = Arrays.asList(1,2,3,4);
-	private final static List<Integer> SMALL_STRAIGHT_TWO = Arrays.asList(2,3,4,5);
-	private final static List<Integer> SMALL_STRAIGHT_THREE = Arrays.asList(3,4,5,6);
+	private static final List<Integer> SMALL_STRAIGHT = Arrays.asList(1,2,3,4,5);
+	private static final List<Integer> LARGE_STRAIGHT = Arrays.asList(2,3,4,5,6);
 
 	/**
-	 * Constructeur de DiceRoll
-	 * @param dice1 first dice rolling
-	 * @param dice2 second dice rolling
-	 * @param dice3 third dice rolling
-	 * @param dice4 fourth dice rolling
-	 * @param dice5 fifth dice rolling
+	 * DiceRoll constructor
+	 * initiate two work lists
+	 * @param dice1 number of first dice roll
+	 * @param dice2 number of second dice roll
+	 * @param dice3 number of third dice roll
+	 * @param dice4 number of fourth dice roll
+	 * @param dice5 number of fifth dice roll
 	 */
 	public DiceRoll(int dice1, int dice2, int dice3, int dice4, int dice5)
 	{
@@ -37,9 +44,9 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * Count all occurrence outcome of one face dice
-	 * @param faceDice dice result after having rolled
-	 * @return sum of all occurrence of dice rolled result 
+	 * The sum of all dice showing the number in parameter
+	 * @param faceDice dice number 
+	 * @return number occur * dice number 
 	 */
 	
 	public int sumOneFaceDiceOccurence(int faceDice)
@@ -48,7 +55,7 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * sum of all dice rolled result
+	 * Sum of all dice rolled result
 	 * @return sum of dice result
 	 */
 	
@@ -59,10 +66,9 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * get list of dice rolled result and its occurrence
-	 * @return Map with dice rolled result as Key and its occurrence as Value
+	 * Get list of dice rolled numbers and its occurrence
+	 * @return Map with dice rolled numbers as Key and its occurrence as Value
 	 */
-	 
 	
 	private Map<Integer,Long> getListOfDiceResultAndOccurence()
 	{
@@ -70,34 +76,34 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * 
-	 * @param diceResult
-	 * @return list of face dice when their occurrence outcome greater than param
+	 * Get list of dice rolled numbers when their occurrence superior or equal than parameter
+	 * @param occurrence number of occurrence
+	 * @return list of dice rolled numbers
 	 */
-	private List<Integer> getDiceResultListWhenOccurencesGreaterThan(long diceResult)
+	private List<Integer> getDiceNumListWhenOccurNumSupOrEqual(long occurrence)
 	{
 		return this.dicesResOccur.entrySet().stream()
-				.filter(e -> e.getValue() >= Long.valueOf(diceResult))
+				.filter(e -> e.getValue() >= Long.valueOf(occurrence))
 				.map(Map.Entry::getKey)
 				.collect(Collectors.toList());
 	}
 	
 	/**
-	 * Get face dice rolled associated with the occurrence giving
+	 * Find dice number associate to the occurrence in parameter
 	 * @param occurrence number rolling with same face dice
-	 * @return face dice rolled associated this occurrence
+	 * @return dice number associated this occurrence, -1 if not found
 	 */
 	public int getOccurenceOfKind(int occurrence)
 	{
-		return this.getDiceResultListWhenOccurencesGreaterThan(occurrence).stream()
+		return this.getDiceNumListWhenOccurNumSupOrEqual(occurrence).stream()
 					.findFirst()
 					.orElse(-1);
 		
 	}
 	
 	/**
-	 * Verify if all five dice with the same number
-	 * @return true when found 5 in list 
+	 * Check if all five dice rolls show the same number
+	 * @return true when found 5 from list of numbers occurrence
 	 */
 	
 	public boolean isYatzy()
@@ -106,46 +112,41 @@ public class DiceRoll {
 	}
 	
 	/**
-	 * Verify if any four dice in ascending order  
-	 * @return boolean
+	 * Check Small straight : The combination 1-2-3-4-5
+	 * @return true for smallStraight else false
 	 */
 	
 	public boolean isSmallStraight()
 	{
-		List<Integer> list =  this.dicesResOccur.entrySet()
-				.stream()
-				.map(Map.Entry::getKey)
-				.collect(Collectors.toList());
-		return list.containsAll(SMALL_STRAIGHT_ONE) || list.containsAll(SMALL_STRAIGHT_TWO) || list.containsAll(SMALL_STRAIGHT_THREE);
+		return this.dicesResOccur.entrySet().stream().
+				map(Map.Entry :: getKey).collect(Collectors.toList()).containsAll(SMALL_STRAIGHT);
 	}
 	
 	/**
-	 * Verify if any five dice in ascending order
-	 * and the result of each rolled dice occurrence is 1 
-	 * @return true / false
+	 * Check Large straight: The combination 2-3-4-5-6
+	 * @return true for largeStraight else false
 	 */
 	public boolean isLargeStraight()
 	{
-		
-		boolean b= this.dicesResOccur.entrySet().stream()
-						.filter(e -> e.getValue() == 1).count()==5 ? true : false;
-		return b && (this.sum() == 20 || this.sum() ==  15);
+		return this.dicesResOccur.entrySet().stream().
+				map(Map.Entry :: getKey).collect(Collectors.toList()).containsAll(LARGE_STRAIGHT);
 	}
 	
 	/**
 	 * Find the pair of dice with the same number of pips.
-	 * @return list of rolled dice result
+	 * @return list of dice
 	 */
 	public List<Integer> findApair()
 	{
-		return this.getDiceResultListWhenOccurencesGreaterThan(2).stream()
+		return this.getDiceNumListWhenOccurNumSupOrEqual(2).stream()
 					.sorted(Comparator.reverseOrder())
 					.collect(Collectors.toList());
 	}
 	
 	/**
-	 * Vérify if any pair with any other three-of-a-kind for five dice
-	 * @return boolean
+	 * Check fullHouse  : Any set of three combined with a different pair
+	 * if any pair with any other three-of-a-kind
+	 * @return true for FullHouse else false
 	 */
 	
 	public boolean isFullHouse()

@@ -7,8 +7,8 @@ public class ScoresTest {
 
 	    @Test
 	    public void testSumOfAllDice() {
-	        assertEquals(15, Scores.sumAllDicesRolledResult(new DiceRoll(2,3,4,5,1)));
-	        assertEquals(16, Scores.sumAllDicesRolledResult(new DiceRoll(3,3,4,5,1)));
+	        assertEquals(15, Scores.chance(new DiceRoll(2,3,4,5,1)));
+	        assertEquals(16, Scores.chance(new DiceRoll(3,3,4,5,1)));
 	    }
 
 	    @Test public void testOnes() {
@@ -60,16 +60,16 @@ public class ScoresTest {
 
 	    @Test
 	    public void testFourOfKind() {
-	        assertEquals(12, Scores.getDiceResultOfAkind(new DiceRoll(3,3,3,3,5), 4));
-	        assertEquals(20, Scores.getDiceResultOfAkind(new DiceRoll(5,5,5,4,5),4));
-	        assertEquals(12, Scores.getDiceResultOfAkind(new DiceRoll(3,3,3,3,3),4));
+	        assertEquals(12, Scores.getFourOfAKind(new DiceRoll(3,3,3,3,5)));
+	        assertEquals(20, Scores.getFourOfAKind(new DiceRoll(5,5,5,4,5)));
+	        assertEquals(12, Scores.getFourOfAKind(new DiceRoll(3,3,3,3,3)));
 	    }
 	    
 	    @Test
 	    public void testThreeOfKind() {
-	        assertEquals(9, Scores.getDiceResultOfAkind(new DiceRoll(3,3,3,4,5), 3));
-	        assertEquals(15, Scores.getDiceResultOfAkind(new DiceRoll(5,3,5,4,5),3));
-	        assertEquals(9, Scores.getDiceResultOfAkind(new DiceRoll(3,3,3,3,5),3));
+	        assertEquals(9, Scores.getThreeOfAKind(new DiceRoll(3,3,3,4,5)));
+	        assertEquals(15, Scores.getThreeOfAKind(new DiceRoll(5,3,5,4,5)));
+	        assertEquals(9, Scores.getThreeOfAKind(new DiceRoll(3,3,3,3,5)));
 	    }
 	    
 	    @Test
@@ -89,8 +89,8 @@ public class ScoresTest {
 
 	    @Test
 	    public void testSmallStraight() {
+	    	assertEquals(15, Scores.scoreOfSmallStraight(new DiceRoll(1,2,3,4,5)));
 	        assertEquals(15, Scores.scoreOfSmallStraight(new DiceRoll(2,3,4,5,1)));
-	        assertEquals(15, Scores.scoreOfSmallStraight(new DiceRoll(1,1,2,3,4)));
 	        assertEquals(0, Scores.scoreOfSmallStraight(new DiceRoll(1,2,2,4,5)));
 	        assertEquals(0, Scores.scoreOfSmallStraight(new DiceRoll(1,1,3,4,5)));
 	    }
